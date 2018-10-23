@@ -23,6 +23,15 @@ class BlogHome extends Component {
     });
   }
 
+  fetchCategories(){
+    butter.category.list()
+  .then(function(resp) {
+    console.log(resp.data)
+  }).catch(function(resp) {
+    console.log(resp)
+  });
+  }
+  
   componentWillMount() {
     let page = this.props.params.page || 1;
 
@@ -42,11 +51,12 @@ class BlogHome extends Component {
       const { next_page, previous_page } = this.state.resp.meta;
 
       return (
-        <div>
+        <section>
+          <div class="posts">
           {this.state.resp.data.map((post) => {
             return (
               <div key={post.slug}>
-                <Link to={`/post/${post.slug}`}>{post.title}</Link>
+                <Link to={`/blog/${post.slug}`}>{post.title}</Link>
               </div>
             )
           })}
@@ -58,7 +68,10 @@ class BlogHome extends Component {
 
             {next_page && <Link to={`/p/${next_page}`}>Next</Link>}
           </div>
-        </div>
+          </div>
+          <div class="categories">Categories</div>
+        </section>
+        
       );
     } else {
       return (
