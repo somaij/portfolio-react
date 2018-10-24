@@ -3,7 +3,7 @@ import { Link } from 'react-router'
 import Butter from 'buttercms'
 
 const butter = Butter('c9c40a5361a0fb34dbc5d7b475dcc7d45effb6dd');
-
+const categories = [];
 class BlogHome extends Component {
 
   constructor(props) {
@@ -26,7 +26,7 @@ class BlogHome extends Component {
   fetchCategories(){
     butter.category.list()
   .then(function(resp) {
-    console.log(resp.data)
+    this.categories = data.map((resp.data) => <li key={resp.data.slug}>{resp.data.name}</li>);
   }).catch(function(resp) {
     console.log(resp)
   });
@@ -34,7 +34,7 @@ class BlogHome extends Component {
   
   componentWillMount() {
     let page = this.props.params.page || 1;
-
+    this.fetchCategories()
     this.fetchPosts(page)
   }
 
@@ -42,7 +42,7 @@ class BlogHome extends Component {
     this.setState({loaded: false});
 
     let page = nextProps.params.page || 1;
-
+    this.fetchCategories()
     this.fetchPosts(page)
   }
 
@@ -70,6 +70,7 @@ class BlogHome extends Component {
           </div>
           </div>
           <div class="categories">Categories</div>
+          {this.categories}
         </section>
         
       );

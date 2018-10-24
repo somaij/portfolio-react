@@ -21,10 +21,11 @@ class BlogPost extends Component {
       this.setState({
         loaded: true,
         post: resp.data.data
+        
       })
     });
   }
-
+  
   render() {
     if (this.state.loaded) {
       const post = this.state.post;
@@ -38,6 +39,7 @@ class BlogPost extends Component {
           </Helmet>
 
           <h1>{post.title}</h1>
+          <p></p>
           <div dangerouslySetInnerHTML={{__html: post.body}} />
         </div>
       );
